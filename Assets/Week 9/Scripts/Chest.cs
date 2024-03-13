@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ChestType { Villager, Merchant, Archer } // Theif
+public enum ChestType { Villager, Merchant, Archer, Theif }
 
 public class Chest : MonoBehaviour
 {
