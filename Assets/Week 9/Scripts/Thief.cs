@@ -15,7 +15,7 @@ public class Thief : Villager
     {
         //dash towards mouse
         destination = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (dashing == null)
+        if (dashing != null)
         {
             StopCoroutine(dashing);
         }
