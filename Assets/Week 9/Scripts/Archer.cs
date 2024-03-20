@@ -7,9 +7,9 @@ public class Archer : Villager
     public GameObject arrowPrefab;
     public Transform spawnPoint;
 
-    public override ChestType CanOpen()
+    public override string ToString()
     {
-        return ChestType.Archer;
+        return "I'm bob the archer";
     }
 
     protected override void Attack()
@@ -19,4 +19,8 @@ public class Archer : Villager
         Instantiate(arrowPrefab, spawnPoint.position, spawnPoint.rotation);
     }
 
+    public override ChestType CanOpen()
+    {
+        return ChestType.Archer;
+    }
 }
