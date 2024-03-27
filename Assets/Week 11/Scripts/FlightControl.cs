@@ -9,13 +9,22 @@ public class FlightControl : MonoBehaviour
     public float turningSpeedReduction = 0.75f;
     Coroutine coroutine;
 
-    public void MakeTurn(float turn)
+    public void MakeLeftTurn(float turn)
     {
         if (coroutine != null)
         {
             StopCoroutine(coroutine);
         }
         coroutine = StartCoroutine(Turn(turn));
+    }
+
+    public void MakeRightTurn(float turn2)
+    {
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+        }
+        coroutine = StartCoroutine(Turn(turn2));
     }
 
     public void MoveForwards(float length)
@@ -26,6 +35,8 @@ public class FlightControl : MonoBehaviour
         }
         coroutine = StartCoroutine(RunLeg(length));
     }
+
+
 
     IEnumerator RunLeg(float legLength)
     {
@@ -43,6 +54,20 @@ public class FlightControl : MonoBehaviour
         float interpolation = 0;
         Quaternion currentHeading = missile.transform.rotation;
         Quaternion newHeading = currentHeading * Quaternion.Euler(0, 0, turn);
+        while (interpolation < 1)
+        {
+            interpolation += Time.deltaTime;
+            missile.transform.rotation = Quaternion.Lerp(currentHeading, newHeading, interpolation);
+            missile.transform.Translate(transform.right * (speed * turningSpeedReduction) * Time.deltaTime);
+            yield return null;
+        }
+    }
+
+    IEnumerator Turn2(float turn2)
+    {
+        float interpolation = 0;
+        Quaternion currentHeading = missile.transform.rotation;
+        Quaternion newHeading = currentHeading * Quaternion.Euler(0, 0, turn2);
         while (interpolation < 1)
         {
             interpolation += Time.deltaTime;
