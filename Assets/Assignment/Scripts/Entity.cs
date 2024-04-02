@@ -5,22 +5,22 @@ using UnityEngine.UI;
 
 public class Entity : MonoBehaviour
 {
-    public float moveSpeed = 5;
+    public float moveSpeed = 2.5f;
     public float maxHealth = 5;
-    private float currentHealth;
-    private Rigidbody2D rb;
+    protected float currentHealth;
+    protected Rigidbody2D rb;
     public Slider healthSlider; //Make sure public
     public Color fullHealthColor = Color.green;
     public Color lowHealthColor = Color.red;
 
-    private void Start()
+    protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
         UpdateHealthUI();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -29,20 +29,20 @@ public class Entity : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
-        float Horizontal = Input.GetAxis("Horizontal");
-        float Vertical = Input.GetAxis("Vertical");
+        //float Horizontal = Input.GetAxis("Horizontal");
+        //float Vertical = Input.GetAxis("Vertical");
 
         //Movement direction based on input
-        Vector2 movement = new Vector2(Horizontal, Vertical).normalized * moveSpeed; //Use vector 2
+        //Vector2 movement = new Vector2(Horizontal, Vertical).normalized * moveSpeed; //Use vector 2
 
         //Move
-        rb.position += movement * Time.fixedDeltaTime;
+        //rb.position += movement * Time.fixedDeltaTime;
 
     }
 
-    void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage) //Public to allow overide in childs
     {
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
@@ -55,12 +55,12 @@ public class Entity : MonoBehaviour
 
     }
 
-    void Die()
+    protected virtual void Die()
     {
         Debug.Log("Player died!");
     }
 
-    void UpdateHealthUI()
+    protected virtual void UpdateHealthUI()
     {
         if (healthSlider != null)
         {
