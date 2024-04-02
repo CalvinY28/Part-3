@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Entity : MonoBehaviour
@@ -13,6 +14,8 @@ public class Entity : MonoBehaviour
     public Color fullHealthColor = Color.green;
     public Color lowHealthColor = Color.red;
 
+    //public string playAgainScene = "Play Again";
+
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -24,12 +27,12 @@ public class Entity : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("ow");
-            TakeDamage(1f);
+            //Debug.Log("ow");
+            //TakeDamage(1f);
         }
     }
 
-    protected virtual void FixedUpdate()
+    protected virtual void FixedUpdate() //Move script to child classes so they can have differnt movements
     {
         //float Horizontal = Input.GetAxis("Horizontal");
         //float Vertical = Input.GetAxis("Vertical");
@@ -58,6 +61,7 @@ public class Entity : MonoBehaviour
     protected virtual void Die()
     {
         Debug.Log("Player died!");
+        //SceneManager.LoadScene(playAgainScene);
     }
 
     protected virtual void UpdateHealthUI()

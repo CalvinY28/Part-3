@@ -40,5 +40,26 @@ public class Enemy : Entity
             player.TakeDamage(1);
             Destroy(gameObject);
         }
+
+        //If it gets hit with projectile then die
+        Projectile projectile = collision.collider.GetComponent<Projectile>();
+        if (projectile != null)
+        {
+            TakeDamage(1);
+        }
+    }
+
+    public override void TakeDamage(float damage)
+    {
+        base.TakeDamage(damage);
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    protected override void Die()
+    {
+        Destroy(gameObject);
     }
 }

@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.SceneManagement;
 
 public class Player : Entity
 {
-    public int score = 0;
+    public static int score = 0;
     public TMP_Text scoreText;
+
+    public string playAgainScene = "Play Again";
 
     protected override void Start()
     {
@@ -42,5 +46,28 @@ public class Player : Entity
         Vector2 movement = new Vector2(Horizontal, Vertical).normalized * moveSpeed; //Use vector 2
         //Move
         rb.position += movement * Time.fixedDeltaTime;
+    }
+
+    public void ApplySlow(float slowValue)
+    {
+        moveSpeed *= slowValue;
+    }
+
+    public void ApplyNormal(float normalValue)
+    {
+        moveSpeed = normalValue;
+    }
+
+    //I need a static function
+    public static int GetScore()
+    {
+        return score;
+    }
+
+    protected override void Die()
+    {
+        Debug.Log("Score: " + GetScore());
+        SceneManager.LoadScene(playAgainScene);
+        score = 0;
     }
 }
